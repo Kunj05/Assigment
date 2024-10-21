@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Module</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="usernameModal" class="modal">
+        <div class="modal-content">
+            <h2>Enter Your Username</h2>
+            <input id="username" class="input" placeholder="Username" />
+            <button id="setUsername" class="set-username-button">Join Chat</button>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <h2 id="chatTitle">Chat Title</h2>
+        <div id="participants">Participants: <span id="participantList"></span></div>
+    </div>
+    
+    <div class="chat-container" style="display: none;">
+        <div id="messages" class="messages"></div>
+        <div class="input-container">
+            <input id="message" class="input" placeholder="Type a message..." />
+            <button id="send" class="send-button">Send</button>
+        </div>
+    </div>
+    
+    
+    <div class="chat-container" style="display: none;">
+        <div id="messages" class="messages"></div>
+        <div class="input-container">
+            <input id="message" class="input" placeholder="Type a message..." />
+            <button id="send" class="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let username = '';
+
+        document.getElementById('setUsername').onclick = () => {
+            const usernameInput = document.getElementById('username').value.trim();
+            if (usernameInput) {
+                username = usernameInput;
+                document.getElementById('usernameModal').style.display = 'none';
+                document.querySelector('.chat-container').style.display = 'flex';
+            } else {
+                alert('Please enter a username');
+            }
+        };
+
+        socket.on('previousMessages', messages => {
+            messages.forEach(msg => {
+                addMessageToDOM(msg);
+            });
+        });
+
+        socket.on('newMessage', msg => {
+            addMessageToDOM(msg);
+        });
+
+        document.getElementById('send').onclick = () => {
+            const message = {
+                username: username || 'Anonymous',
+                message: document.getElementById('message').value
+            };
+            if (message.message.trim()) {
+                socket.emit('sendMessage', message);
+                document.getElementById('message').value = ''; 
+            }
+        };
+
+        function addMessageToDOM(msg) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message ' + (msg.username === username ? 'user' : 'other');
+            messageElement.textContent = `${msg.username}: ${msg.message}`;
+            document.getElementById('messages').appendChild(messageElement);
+            document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight; 
+        }
+        const chatData = {
+            title: "Group Chat",
+            participants: ["User1", "User2", "You"], 
+        };
+
+        document.getElementById('chatTitle').textContent = chatData.title;
+        document.getElementById('participantList').textContent = chatData.participants.join(', ');
+
+    </script>
+</body>
+</html>

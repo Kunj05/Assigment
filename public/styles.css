@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e5ddd5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.chat-container {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages {
+    padding: 20px;
+    overflow-y: auto;
+    height: 300px;
+    border-bottom: 1px solid #ccc;
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+}
+
+.input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Rounded input */
+    margin-right: 10px;
+}
+
+.set-username-button,
+.send-button {
+    background-color: #25d366;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.set-username-button:hover,
+.send-button:hover {
+    background-color: #128c7e;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%; 
+    clear: both;
+}
+
+.message.user {
+    background-color: #dcf8c6;
+    margin-left: auto; 
+    text-align: right; 
+}
+
+.message.other {
+    background-color: #f1f0f0; 
+    margin-right: auto;
+    text-align: left; 
+}
+
+.sidebar {
+    width: 250px; 
+    background: #f0f0f0;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    height: 100vh; 
+    position: fixed; 
+}
+
+.chat-container {
+    margin-left: 250px; 
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+#chatTitle {
+    margin: 0;
+    font-size: 18px;
+}
+
+#participants {
+    margin-top: 10px;
+}
